@@ -1,0 +1,212 @@
+<!doctype html>
+<html>
+<head>
+	<title>Frontend Coding Test</title>
+	<link type="text/css" rel="stylesheet" href="../css/style.css" />
+	<style type="text/css">
+		#rotator {
+			width: 450px;
+			height: 300px;
+			border: 1px solid black;
+			background: #aaa;
+			text-align: center;
+		}
+
+		/******************************************************************************************************************************/
+		/*Note that I have left the CSS inline with HTML for the conveninence of the reviewer. This should be in an externalised file.*/
+
+		/******************************************************************************************************************************/
+
+		#rotator #masker{
+			width:100%;
+			height:100%;
+			position:relative;
+			overflow:hidden;
+		}
+		#rotator #slider{
+			width:99999px;
+			height:300px;
+			position:absolute;
+			left:0px;
+			transition: left 1000ms cubic-bezier(0.645, 0.045, 0.355, 1.000);
+			-webkit-transition: left 1000ms cubic-bezier(0.645, 0.045, 0.355, 1.000); /* Safari */
+		}
+		#rotator .item{
+			width:450px;
+			height:300px;
+			background-color:#ff0;
+			position:relative;
+			float:left;
+		}
+
+		#rotator .item .text{
+			width:450px;
+			background-image:url('../img/text-bg.png');
+			z-index:11;
+			position:absolute;
+			bottom:0px;
+		}
+
+		#rotator img{
+			position:relative;
+			float:left;
+			z-index:10;
+		}
+
+		#rotator h4, #rotator p{
+			width:410px;
+			text-align:left;
+		}
+
+		#rotator h4{
+			text-transform:uppercase;
+			letter-spacing:-2px;
+			padding:16px 20px 10px 20px;
+			margin:0;
+			color:#DC291E;
+			font-size:30px;
+		}
+
+		#rotator p{
+			margin:0;
+			padding:0 20px 20px 20px;
+		}
+
+	</style>
+</head>
+<body>
+	<div id="headwrap">
+	<div class="head">
+		<div class="logo">Riot Games</div>
+	</div>
+</div>
+
+<div id="content">
+	<h1><span class="red">Image</span> Rotator</h1>
+
+	<p>
+		Using the below images, make a rotator in the box below that shows only one of the Katarina skins every 3 seconds.  The rotator should also display the correct image title and description with each image change.
+	</p>
+	<p>
+		It would be really awesome if the slides animated between one another!
+	</p>
+
+	<hr />
+	<!--
+	<h4>Katarina</h4>
+	<p>Fruitcake bonbon donut jelly-o brownie biscuit marzipan pie.</p>
+	<img src="../img/kat_1.jpg" /><br/>
+
+	<h4>Red Card Katarina</h4>
+	<p>Cheesecake marzipan cupcake biscuit candy canes pudding.</p>
+	<img src="../img/kat_2.jpg" /><br/>
+
+	<h4>Kitty Cat Katarina</h4>
+	<p>Applicake topping halvah lemon drops wypas cotton candy.</p>
+	<img src="../img/kat_3.jpg" /><br/>
+
+	<h4>High Command Katarina</h4>
+	<p>Oat cake macaroon souffle cupcake chupa chups chocolate bar bear claw dragee lemon drops.</p>
+	<img src="../img/kat_4.jpg" /><br/>
+
+	<hr/>
+-->
+
+	<div id="rotator">
+		<div id="masker">
+			<div id="slider">
+				<!-- Assume that the content is being pulled from a php loop from a CMS/DB we dump the individual contents into their own seperate divs-->
+				<div class="item">
+					<div class="text">
+						<!-- This is filled with a transparent PNG to help text legibility but retain acceptable image visibility. Note use of PNG instead of css opacity as some oldies are still using ancient browsers - whether the target market is likely to use crusty old browsers is noted but irrelevant due to the nature of the fallback.
+				
+						There are cases where a newer css property's fallback on an older browser is acceptable and we could choose to use it but in this specific case, the fallback of a transparency background is solid - and that would impact our image visibility negatively so the good ole PNG comes into play.
+						-->
+						<h4>Katarina</h4>
+						<p>Fruitcake bonbon donut jelly-o brownie biscuit marzipan pie.</p>
+					</div>
+					<img src="../img/kat_1.jpg" />
+				</div>
+
+				<div class="item">
+					<div class="text">
+						<h4>Red Card Katarina</h4>
+						<p>Cheesecake marzipan cupcake biscuit candy canes pudding.</p>
+					</div>
+					<img src="../img/kat_2.jpg" />
+				</div>
+
+				<div class="item">
+					<div class="text">
+						<h4>Kitty Cat Katarina</h4>
+						<p>Applicake topping halvah lemon drops wypas cotton candy.</p>
+					</div>
+					<img src="../img/kat_3.jpg" />
+				</div>
+
+				<div class="item">
+					<div class="text">
+						<h4>High Command Katarina</h4>
+						<p>Oat cake macaroon souffle cupcake chupa chups chocolate bar bear claw dragee lemon drops.</p>
+					</div>
+					<img src="../img/kat_4.jpg" />
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<h4>CSS3 TRANSITIONS FOR ANIMATIONS - JS FALLBACK?</h4>
+	<p>Because the task requires that no third-party libraries are used, I have chosen to leave unsupportive browsers unanimated. I could have pulled in sections of jQuery or XYZ's library to run the animation or write a clunky and untested animation-base-function but I think that might defeat the purpose of the task.<p>
+	<p>In a real-world situation however, a feature detection script could be used and we would have a javascript powered animation to fallback on from the css3. I prefer to use css3 to run animations where possible because it performs better especially on mobiles/tablets (or so I've observed thus far).<p>
+</div>
+
+<!-- /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+<!-- I have placed the script inline with the HTML for the reviewer's conveninence. In a real world scenario the .js will be externalised for easier maintanence and speed benefits if it's required on seperate pages-->
+<!-- /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+<script type="text/javascript">
+	
+	//Find out how many slides we have - this needs to be dynamic because each character MAY not have same number of skins etc
+	//"Item" is fairly generic so we target a bit better by using the "slider" ID to narrow it down a bit... though we could just name "item" something more detailed but if we were to use multiple sliders on the page, the same problem would occur regardless. Using an ID + Class means later we could write in something else to target a different ID (if theres more sliders).
+	var num_slides = document.querySelectorAll('#slider .item').length;
+
+	//Store the width of the slider. This will act as the basis for the rotator.
+	var slide_width = document.querySelector('#rotator').scrollWidth;
+
+	//Create a variable to hold our current slide number
+	var current_slide = 1;
+	var slider_position = 0;
+
+	//var to hold the slider div element. We shouldn't have to use the getElem function everytime...
+	var slider_div = document.querySelector("#slider");
+
+
+	//Create a timer to run the slider
+	function start_timer(duration){
+		setInterval(function(){
+			
+			//We use if/else to check whether we are at the end of the slider, in which case we reset back to 1
+			if(current_slide == num_slides){
+				current_slide = 1;
+				slide_position = 0;
+				//Lacking the use of a third-party library like jQuery, I opted to rely on css3 transitions for the animation of the slider. 
+				//In a real world scenario, this would be a poor solution as most IE versions do not support css3 transitions.
+				//Ideally I would use css3 transitions and use a feature detection script to then fall-back on jQuery for non-supportive browsers.
+				//NOTE: I realise I could've ripped out the animation functions from jQuery or XYZ library and simply do all of the above - but I figure that may defeat the point of the task.
+				slider_div.style.left = slide_position+ 'px';
+			}else{
+				current_slide++;
+				slide_position = slide_width * (current_slide - 1) * -1;
+				slider_div.style.left = slide_position+ 'px';
+			}
+
+		}, duration);
+	}
+
+	//Run our timer function
+	start_timer(3000);
+
+</script>
+
+</body>
+</html>

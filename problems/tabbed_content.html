@@ -1,0 +1,167 @@
+<!doctype html>
+<html>
+<head>
+	<title>Frontend Coding Test</title>
+	<link type="text/css" rel="stylesheet" href="../css/style.css" />
+	<style type="text/css">
+		/******************************************************************************************************************************/
+		/*Note that I have left the CSS inline with HTML for the conveninence of the reviewer. This should be in an externalised file.*/
+
+		/******************************************************************************************************************************/
+		.picture {
+			background-color: #F9F9F9;
+			border: 1px solid #CCCCCC; padding: 3px;
+			text-align: center;
+			margin: 0 0 18px 0;
+			width: 647px;
+			color: #000;
+		}
+		
+		.picture img {
+			border: 1px solid #CCCCCC;
+			vertical-align:middle; margin-bottom: 3px;
+		}
+
+		#container{
+			width:645px;
+			margin-top:40px;
+		}
+
+		#tab_container{
+			width:100%;
+			height:40px;
+			position:relative;
+			float:left;
+		}
+
+		#tab_container h3{
+			text-transform:uppercase;
+			position:relative;
+			float:left;
+			color:#fff;
+			background-color:#242424;
+			padding:10px 20px;
+			margin:0;
+			margin-right:2px;
+			cursor:pointer;
+		}
+
+		#tab_container h3:hover{
+			background-color:#747474;
+		}
+
+		#tab_container h3.active{
+			color:#fff;
+			background-color:#DC291E;
+		}
+
+		#content_container{
+			padding:10px 20px;
+			position:relative;
+			clear:both;
+			background-color:#4c4c4c;
+			color:#fff;
+			min-height:100px;
+		}
+
+		#content_container .text-block{
+			display:none;
+		}
+
+		#content_container .text-block.active{
+			display:block;
+		}
+
+	</style>
+</head>
+<body>	
+	<div id="headwrap">
+		<div class="head">
+			<div class="logo">Riot Games</div>
+		</div>
+	</div>
+	<div id="content">
+		<h1><span class="red">Tabbed</span> content</h1>
+
+		<p>
+			Using HTML, CSS, and JavaScript, create a functional tabbed content container in the div below.  Each tab should contain different content, and content should change when clicking on a different tab.
+		</p>
+
+		<div class="picture">
+			<img src="../img/tabbed_content.png" />
+			<p>Example of a tabbed content container.</p>
+		</div>
+
+		<hr/>
+
+		<div id="container">
+			<div id="tab_container">
+				<h3>Tab 1</h3>
+				<h3>Tab 2</h3>
+				<h3>Tab 3</h3>
+			</div>
+
+			<div id="content_container">
+				<div class="text-block">
+					<p>
+						Gingerbread muffin gummies gingerbread macaroon. Lollipop candy applicake toffee faworki. Bear claw topping jelly toffee toffee powder tiramisu candy chupa chups. Chupa chups dragee icing applicake chupa chups dessert. Croissant jelly faworki marzipan tootsie roll marshmallow. Marshmallow toffee sweet roll fruitcake.
+					</p>
+				</div>
+
+				<div class="text-block">
+					<p>
+						Chocolate faworki croissant brownie halvah macaroon gummi bears wypas. Chupa chups icing gummies pudding dessert carrot cake. Cupcake jelly beans sweet roll icing ice cream apple pie tootsie roll gummi bears marzipan. Brownie gummies chupa chups pie. Cupcake jujubes topping. 
+					</p>
+
+					<p>
+						Chocolate faworki croissant brownie halvah macaroon gummi bears wypas. Chupa chups icing gummies pudding dessert carrot cake. Cupcake jelly beans sweet roll icing ice cream apple pie tootsie roll gummi bears marzipan. Brownie gummies chupa chups pie. Cupcake jujubes topping. 
+					</p>
+				</div>
+
+				<div class="text-block">
+					<p>
+						Cheesecake jelly beans ice cream lollipop sweet pastry. Chupa chups dessert cheesecake sesame snaps. Cookie ice cream candy canes pastry cake muffin. Icing chocolate sweet gummi bears powder oat cake oat cake lemon drops.
+					</p>
+				</div>
+			</div>
+		</div>
+
+		<h2>TABTASTIC!</h2>
+		<p>Not much to comment on this one... Pretty straight forward.</p>
+	</div>
+	
+<!-- /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+<!-- I have placed the script inline with the HTML for the reviewer's conveninence. In a real world scenario the .js will be externalised for easier maintanence and speed benefits if it's required on seperate pages-->
+<!-- /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+<script type="text/javascript">
+
+	//Get the number of tabs we have
+	var tab_amount = document.querySelectorAll('#tab_container h3').length;
+
+	//Set active state for first tab and content
+	document.querySelectorAll('#tab_container h3')[0].className = "active";
+	document.querySelectorAll('#content_container .text-block')[0].className += " active";
+
+	//Add an onclick event to each of the tabs.
+	for (var i = 0; i < tab_amount; i++){
+		document.getElementsByTagName('h3')[i].setAttribute('onclick','tab_click('+ i + ');');
+	}
+
+	function tab_click(node){
+		clear_active();
+		document.querySelectorAll('#tab_container h3')[node].className = "active";
+		document.querySelectorAll('#content_container .text-block')[node].className += " active";
+	}
+
+	//Function to clear active states
+	function clear_active(){
+		for (var i = 0; i < tab_amount; i++){
+			document.querySelectorAll('#tab_container h3')[i].className = "";
+			document.querySelectorAll('#content_container .text-block')[i].className = "text-block";
+		}
+	}
+
+</script>
+
+</body>
+</html>

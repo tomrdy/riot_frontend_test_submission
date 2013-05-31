@@ -1,0 +1,158 @@
+<!doctype html>
+<html>
+<head>
+	<title>Frontend Coding Test | Text Search</title>
+	<link type="text/css" rel="stylesheet" href="../css/style.css" />
+	<style type="text/css">
+		/******************************************************************************************************************************/
+		/*Note that I have left the CSS inline with HTML for the conveninence of the reviewer. This should be in an externalised file.*/
+
+		/******************************************************************************************************************************/
+
+		#result_container{
+			display:none;
+		}
+
+	</style>
+</head>
+<body>
+<div id="headwrap">
+	<div class="head">
+		<div class="logo">Riot Games</div>
+	</div>
+</div>
+<div id="content">
+	<h1><span class="red">Text</span> Search</h1>
+	<p>
+		There are two main components below, a search form and a text article about turtles. The form should be setup such that a word or phase can be entered in the search form, and the number of occurences of that phrase is shown below. 
+	</p>
+	<p>
+		For example, in the below text there are two occurences of the word "Testudines" so if you put that word in the search form, and submit, the results should say:
+
+		<i>Found 2 occurances of the word "Testudines" in the below text.</i>
+	</p>
+	<p>
+		Keep in mind that words can be contained within multiple levels of HTML elements, and phrases may cross those HTML element boundaries.
+	</p>
+
+	<hr/>
+
+	<h2>Search</h2>
+	<!-- Added an ID to the search form-->
+	<form id="search_form">
+		<input type="text" id="search_input" value="Search here..." />
+
+		<!-- Added an ID to the search button-->
+		<input type="submit" id="submit_button" value="Search"/>
+	</form>
+
+	<!--Added a container-->
+	<span id="result_container">
+		<h3>Results</h3>
+		<!--Added span and id's to particular sections that we will need to update after a search-->
+		Found <span id="result">0 occurances</span> of the <span id="search_type">word</span> "<span id="term">llama</span>" in the below text.
+	</span>
+	<br/>
+	<h2>I CAN'T STOP THINKING ABOUT TURTLES</h2>
+	<p>Searching for a word or phrase is simple enough but having the requirement that phrases may cross boundaries made it quite interesting. I ended up realising that not only did we have to filter out the tags and punctuation, we needed to also remove spaced due to the tabs left by the html mark-up.</p>
+	<p>Removing the tabs with replace() and replacing it with " " created another issue as we were now faced with conjoined words. Furthermore, the number of tabs cannot be assumed to be consistent (though it's about 4 in this case) so we cannot just say "remove 4 tabs and replaced with 1 space". I considered simply removing the tabs in the HTML markup but took the assumption that it would be CMS driven and there could potentially be some sort of limitation </p>
+	<p>My final solution was to remove all spaces as well as spaces from the user's query so that we are basically looking for a word... in a very long word (so to speak). This was able to achieve the directives of the task however, I must admit that there is a potential fault with my solution.</p>
+	<p>Since the words are no longer seperated, there is the possibiliy that the count returned is wrong due to the chance that a word could be formed by the end and start of multiple words. but the likelihood of this happening in a real user-case I believe would be minimal</p>
+	<p>So... admittedly, my solution isn't perfect but the best I can come up with right now!</p>
+
+
+	<hr/>
+
+	<h2>Search Text</h2>
+	<div id="search_text">
+		<p>
+			<b>Turtles</b> are <a href="/wiki/Reptile" title="Reptile">reptiles</a> of the <a href="/wiki/Order_(biology)" title="Order (biology)">order</a> <b>Chelonii</b><sup id="cite_ref-Dubois_2-0" class="reference"><a href="#cite_note-Dubois-2"><span>[</span>2<span>]</span></a></sup> or <b>Testudines</b> characterised by a special <a href="/wiki/Bone" title="Bone">bony</a> or <a href="/wiki/Cartilage" title="Cartilage">cartilaginous</a> <a href="/wiki/Animal_shell" title="Animal shell" class="mw-redirect">shell</a> developed from their <a href="/wiki/Rib" title="Rib">ribs</a> and acting as a <a href="/wiki/Shield" title="Shield">shield</a>.<sup id="cite_ref-3" class="reference"><a href="#cite_note-3"><span>[</span>3<span>]</span></a></sup> "Turtle" may either refer to the order as a whole, or to particular turtles which make up a <a href="/wiki/Form_taxon" title="Form taxon" class="mw-redirect">form taxon</a> that is not <a href="/wiki/Monophyletic" title="Monophyletic" class="mw-redirect">monophyletic</a>.
+		</p>
+		<p>
+			The order Chelonii or Testudines includes both extant (living) and <a href="/wiki/Extinction" title="Extinction">extinct</a> species. The earliest known turtles date from <span class="nourlexpansion plainlinks" style="white-space:nowrap;"><a rel="nofollow" class="external text" href="http://toolserver.org/~verisimilus/Timeline/Timeline.php?Ma=220">220</a> <a href="/wiki/Million_years_ago" title="Million years ago" class="mw-redirect">million years ago</a></span>,<sup id="cite_ref-Li-etal_4-0" class="reference"><a href="#cite_note-Li-etal-4"><span>[</span>4<span>]</span></a></sup> making turtles one of the oldest reptile groups and a more ancient group than <a href="/wiki/Lizard" title="Lizard">lizards</a>, <a href="/wiki/Snake" title="Snake">snakes</a> or <a href="/wiki/Crocodile" title="Crocodile">crocodiles</a>. Of the many <a href="/wiki/Species" title="Species">species</a> alive today, some are highly <a href="/wiki/Endangered_species" title="Endangered species">endangered</a>.<sup id="cite_ref-barzyk_5-0" class="reference"><a href="#cite_note-barzyk-5"><span>[</span>5<span>]</span></a></sup>
+		</p>
+		<p>
+			Like all other extant reptiles, turtles are <a href="/wiki/Ectotherm" title="Ectotherm">ectotherms</a> their internal temperature varies according to the ambient environment, commonly called <a href="/wiki/Poikilotherm" title="Poikilotherm">cold-blooded</a>. However, because of their high metabolic rate, <a href="/wiki/Leatherback_sea_turtle" title="Leatherback sea turtle">leatherback sea turtles</a> have a body temperature that is noticeably higher than that of the surrounding water.
+		</p>
+		<p>
+			Like other <a href="/wiki/Amniote" title="Amniote">amniotes</a> (reptiles, dinosaurs, birds, and mammals), they breathe air and do not lay eggs underwater, although many species live in or around water. The largest turtles are aquatic.
+		</p>
+	</div>
+</div>
+
+<!-- /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+<!-- I have placed the script inline with the HTML for the reviewer's conveninence. In a real world scenario the .js will be externalised for easier maintanence and speed benefits if it's required on seperate pages-->
+<!-- /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+<script type="text/javascript">
+
+	//Store the contents that we need to search...
+	var search_text_raw = document.querySelector('#search_text').innerHTML;
+
+	//We need to clean out the text of tags etc.
+	//This proved an interesting problem as the HTML left all these TABS in the string. Replacing the tabs with spaces didn't solve the issue of searching between phrases that go between paragraphs because you would just have lots of spaces.
+	//I realised that we had to actually remove all teh spaces and tabs and also remove spaces from the user's search. That way we can search phrases anywhere regardless of where the phrase sits.
+	var search_text = search_text_raw.replace(/(<([^>]+)>)/g, '').replace(/[^A-Za-z\s]+/g, '').replace(/(\r\n|\n|\r|\r?)/gm,"").replace(/\t/g, '').replace(/ /g, '');
+
+	var submit_button = document.querySelector('#submit_button');
+
+	submit_button.onclick = function(){
+		run_search();
+		return false;
+	}
+
+	search_form.onsubmit = function(){
+		run_search();
+		return false;
+	}
+
+	//Search function
+	function run_search(){	
+		//Store out term from the input field as a variable
+		var search_term = document.querySelector('#search_input').value;
+
+		//Remove all spaces and just keep characters
+		var search_term_spartan = search_term.replace(/ /g, '');
+
+		//We also need to know whether we are searching for a term or word so we look for the spaces from the non-spartan string
+		var spaces = search_term.match(/ /g);
+
+		//Update the search type in the copy for the user based on whether there are spaces
+		if(spaces){
+			document.querySelector('#search_type').innerHTML = 'phrase';
+		}else{
+			document.querySelector('#search_type').innerHTML = 'word';
+		}
+
+		//Update the results
+		document.querySelector('#term').innerHTML= search_term;
+
+		//Use match() function to search for the term globally and case insensitive.
+		//match() doesn't take strings so we gotta use a regular expression to store our stuff and then push it into the function all together.
+		var regExp = new RegExp(search_term_spartan, 'gi');
+		var terms_matched = search_text.match(regExp); 
+
+		//Check if any terms were found.
+		if(terms_matched){
+
+			results = terms_matched.length;
+
+			if(results==1){
+				document.querySelector('#result').innerHTML = results + " occurence";
+			}else{
+				document.querySelector('#result').innerHTML = results + " occurences";
+			}
+			
+		}else{
+			results = 0;
+			document.querySelector('#result').innerHTML = 0 + " occurences";
+		}
+
+		//Show results
+		document.querySelector('#result_container').style.display = "block";
+	}
+
+
+</script>
+
+</body>
+</html>
